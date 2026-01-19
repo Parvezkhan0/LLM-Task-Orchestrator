@@ -1,0 +1,121 @@
+openapi: 3.0.1
+info:
+  title: Hello World Agent API
+  description: API for interacting with the Hello World Agent
+  version: "1.0.0"
+servers:
+  - url: https://api.example.com/v1
+    description: Production server
+paths:
+  /research:
+    post:
+      operationId: researchTopic
+      summary: Perform research on a given topic
+      description: Uses ReACT methodology to research and analyze a topic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - prompt
+              properties:
+                prompt:
+                  type: string
+                  description: The research topic or question
+                hitl:
+                  type: boolean
+                  description: Enable human-in-the-loop mode
+                  default: false
+      responses:
+        '200':
+          description: Research results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                  analysis:
+                    type: object
+  /execute:
+    post:
+      operationId: executeTask
+      summary: Execute a specific task
+      description: Implements and validates a given task
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - prompt
+              properties:
+                prompt:
+                  type: string
+                  description: The task to execute
+                hitl:
+                  type: boolean
+                  description: Enable human-in-the-loop mode
+                  default: false
+      responses:
+        '200':
+          description: Execution results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                  validation:
+                    type: object
+  /analyze:
+    post:
+      operationId: analyzeData
+      summary: Analyze data or performance
+      description: Performs analysis using defined metrics and rules
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - prompt
+              properties:
+                prompt:
+                  type: string
+                  description: The analysis target
+                hitl:
+                  type: boolean
+                  description: Enable human-in-the-loop mode
+                  default: false
+      responses:
+        '200':
+          description: Analysis results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                  metrics:
+                    type: object
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://openrouter.ai/auth
+          tokenUrl: https://openrouter.ai/token
+          scopes:
+            read: Read access
+            write: Write access
+security:
+  - OAuth2: [read, write]

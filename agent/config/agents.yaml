@@ -1,0 +1,23 @@
+researcher:
+  role: Research Analyst
+  goal: Gather and analyze information effectively
+  llm: anthropic/claude-2
+  tools:
+    - web_search
+    - human_input
+
+executor:
+  role: Task Executor
+  goal: Implement solutions with precision and reliability
+  llm: anthropic/claude-2
+  tools:
+    - code_execution
+    - human_input
+
+analyzer:
+  role: Performance Analyzer
+  goal: Evaluate and optimize system performance
+  llm: anthropic/claude-2
+  tools:
+    - metrics_analysis
+    - human_input

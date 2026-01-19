@@ -1,0 +1,69 @@
+# Hello World Agent - ReACT Methodology Demonstration System
+# Version: 0.1.0
+# Last Updated: 2025-02-16
+
+# Quick Start Guide for Autonomous Agents:
+# 1. Read the manifest at /.well-known/agent-manifest.json for complete capabilities
+# 2. See /.well-known/agent-guide.md for ReACT methodology implementation
+# 3. Authenticate via OpenRouter API
+# 4. Access streaming responses for real-time interaction
+# 5. Optional HITL mode available for human validation
+
+# Structured Specifications:
+# - Main Manifest:     /.well-known/agent-manifest.json     # Complete system overview
+# - Agent Guide:       /.well-known/agent-guide.md         # ReACT methodology guide
+# - API Docs:          /.well-known/openapi.yaml           # REST API documentation
+# - Plugin Info:       /.well-known/ai-plugin.json         # AI plugin capabilities
+# - Health Status:     /.well-known/health.json            # System health monitoring
+
+# Command & Control Structures Available:
+# - Autonomous: Self-directed ReACT methodology execution
+# - HITL: Human-in-the-loop validation points
+# - Streaming: Real-time response processing
+
+# Security Requirements:
+# - OpenRouter API authentication required
+# - Environment variables for sensitive data
+# - Rate limits enforced
+
+# Standard Crawler Directives
+User-agent: *
+Allow: /.well-known/
+Disallow: /config/    # Configuration files
+Disallow: /tools/     # Internal tools
+Disallow: /docs/      # Documentation
+Disallow: /examples/  # Example implementations
+
+# Protected API Endpoints (Require Authentication)
+Disallow: /api/research/   # Research operations
+Disallow: /api/execute/    # Task execution
+Disallow: /api/analyze/    # Analysis operations
+
+# Available Capabilities:
+# - Research: Information gathering and analysis
+# - Execute: Task implementation and validation
+# - Analyze: Performance metrics and optimization
+# - HITL: Optional human validation
+
+# Available Models:
+# - anthropic/claude-2: Primary research model
+# - anthropic/claude-2: Task execution model
+# - anthropic/claude-2: Analysis model
+
+# Resource Management:
+# - Streaming responses for efficiency
+# - Progress tracking
+# - Error handling and recovery
+# - State preservation
+
+# Documentation & Support:
+# - User Guide: /docs/readme.md
+# - Configuration: /docs/configuration.md
+# - Templates: /docs/templates.md
+# - Tools: /docs/tools.md
+# - HITL Guide: /docs/human_in_the_loop.md
+
+# For detailed specifications and capabilities, see:
+# https://github.com/ruvnet/hello_world_agent/.well-known/agent-manifest.json
+
+Sitemap: https://github.com/ruvnet/hello_world_agent/sitemap.xml

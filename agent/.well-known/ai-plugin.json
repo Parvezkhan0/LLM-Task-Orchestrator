@@ -1,0 +1,22 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "Hello World Agent",
+    "name_for_model": "hello_world_agent",
+    "description_for_human": "A simple demonstration agent using the ReACT methodology for analyzing and executing tasks.",
+    "description_for_model": "This agent implements the ReACT (Reasoning and Acting) methodology to perform research, execution, and analysis tasks. It supports both autonomous and human-in-the-loop operation modes.",
+    "auth": {
+        "type": "oauth2",
+        "client_url": "https://openrouter.ai/",
+        "scope": "read write",
+        "authorization_url": "https://openrouter.ai/auth",
+        "authorization_content_type": "application/json"
+    },
+    "api": {
+        "type": "openapi",
+        "url": "https://raw.githubusercontent.com/ruvnet/hello_world_agent/main/agent/.well-known/openapi.yaml",
+        "has_user_authentication": true
+    },
+    "logo_url": "https://raw.githubusercontent.com/ruvnet/hello_world_agent/main/agent/.well-known/logo.png",
+    "contact_email": "support@example.com",
+    "legal_info_url": "https://example.com/legal"
+}

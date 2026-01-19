@@ -1,0 +1,58 @@
+{
+    "status": "operational",
+    "version": "0.1.0",
+    "last_updated": "2025-02-16T22:27:00Z",
+    "components": {
+        "core": {
+            "status": "operational",
+            "description": "ReACT methodology engine",
+            "metrics": {
+                "uptime": "99.9%",
+                "response_time": "200ms"
+            }
+        },
+        "llm": {
+            "status": "operational",
+            "provider": "openrouter",
+            "models": {
+                "anthropic/claude-2": {
+                    "status": "operational",
+                    "latency": "1.2s"
+                }
+            }
+        },
+        "api": {
+            "status": "operational",
+            "endpoints": {
+                "/research": "operational",
+                "/execute": "operational",
+                "/analyze": "operational"
+            }
+        },
+        "streaming": {
+            "status": "operational",
+            "protocol": "server-sent-events",
+            "latency": "50ms"
+        }
+    },
+    "resource_usage": {
+        "requests": {
+            "current": 0,
+            "limit": 100,
+            "period": "hour"
+        },
+        "tokens": {
+            "current": 0,
+            "limit": 4096,
+            "period": "request"
+        },
+        "concurrent_tasks": {
+            "current": 0,
+            "limit": 1
+        }
+    },
+    "maintenance": {
+        "scheduled": false,
+        "next_window": null
+    }
+}

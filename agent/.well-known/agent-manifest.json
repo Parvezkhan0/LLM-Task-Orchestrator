@@ -1,0 +1,78 @@
+{
+    "name": "Hello World Agent",
+    "version": "0.1.0",
+    "description": "ReACT Methodology Demonstration System",
+    "last_updated": "2025-02-16",
+    
+    "capabilities": {
+        "research": {
+            "description": "Information gathering and analysis using ReACT methodology",
+            "methods": ["thought", "action", "observation", "reflection"],
+            "model": "anthropic/claude-2"
+        },
+        "execute": {
+            "description": "Task implementation and validation",
+            "methods": ["thought", "action", "observation", "validation"],
+            "model": "anthropic/claude-2"
+        },
+        "analyze": {
+            "description": "Performance metrics and optimization",
+            "methods": ["thought", "action", "observation", "recommendation"],
+            "model": "anthropic/claude-2"
+        }
+    },
+
+    "control_modes": {
+        "autonomous": {
+            "description": "Self-directed ReACT methodology execution",
+            "default": true
+        },
+        "hitl": {
+            "description": "Human-in-the-loop validation points",
+            "default": false,
+            "validation_points": [
+                "research_focus",
+                "analysis_approach",
+                "execution_plan",
+                "results_verification"
+            ]
+        }
+    },
+
+    "authentication": {
+        "type": "api_key",
+        "provider": "openrouter",
+        "documentation": "https://openrouter.ai/docs"
+    },
+
+    "interfaces": {
+        "rest_api": {
+            "specification": "/.well-known/openapi.yaml",
+            "base_url": "/api/v1"
+        },
+        "streaming": {
+            "enabled": true,
+            "protocol": "server-sent-events"
+        }
+    },
+
+    "documentation": {
+        "user_guide": "/docs/readme.md",
+        "configuration": "/docs/configuration.md",
+        "templates": "/docs/templates.md",
+        "tools": "/docs/tools.md",
+        "hitl": "/docs/human_in_the_loop.md"
+    },
+
+    "resource_limits": {
+        "rate_limit": "100/hour",
+        "max_tokens": 4096,
+        "concurrent_tasks": 1
+    },
+
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ruvnet/hello_world_agent",
+        "maintainer": "rUv"
+    }
+}
