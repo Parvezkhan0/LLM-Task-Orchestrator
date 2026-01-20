@@ -1,0 +1,30 @@
+# Standard Crawler Directives
+User-agent: *
+Allow: /.well-known/
+Disallow: /config/    # Configuration files
+Disallow: /tools/     # Internal tools
+Disallow: /docs/      # Documentation
+Disallow: /examples/  # Example implementations
+
+# Protected API Endpoints (Require Authentication)
+Disallow: /api/research/   # Research operations
+Disallow: /api/execute/    # Task execution
+Disallow: /api/analyze/    # Analysis operations
+
+# Available Capabilities:
+# - Research: Information gathering and analysis
+# - Execute: Task implementation and validation
+# - Analyze: Performance metrics and optimization
+# - HITL: Optional human validation
+
+# Available Models:
+# - anthropic/claude-2: Primary research model
+# - anthropic/claude-2: Task execution model
+# - anthropic/claude-2: Analysis model
+
+# Resource Management:
+# - Streaming responses for efficiency
+# - Progress tracking
+# - Error handling and recovery
+# - State preservation
+

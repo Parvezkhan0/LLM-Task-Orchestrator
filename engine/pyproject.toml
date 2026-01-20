@@ -3,15 +3,15 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "hello_world"
+name = "llm_task_orchestrator"
 version = "0.1.0"
 authors = [
-    { name = "QAM Team" },
+    { name = "Parvez Khan" },
 ]
-description = "Hello World Agent for Quantum Agentic Agents"
+description = "LLM Task Orchestrator for building and managing autonomous AI task workflows"
 requires-python = ">=3.8"
 dependencies = [
-    "crewai[local]>=0.1.0",  # Use local backend instead of ChromaDB
+    "crewai[local]>=0.1.0",
     "langchain>=0.1.0",
     "python-dotenv>=1.0.0",
     "pyyaml>=6.0.0",
