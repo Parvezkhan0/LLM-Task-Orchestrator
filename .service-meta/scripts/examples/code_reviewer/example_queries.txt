@@ -1,0 +1,45 @@
+# Example Code Review Queries
+
+1. Basic Code Review
+curl -X POST http://localhost:8000   -H "Content-Type: application/json"   -d '{
+    "input": "Please review this code for quality and best practices:",
+    "code": "function calculateTotal(items) {
+      let total = 0;
+      for(var i=0; i<items.length; i++) {
+        total = total + items[i].price;
+      }
+      return total;
+    }"
+  }'
+
+2. Security Review
+curl -X POST http://localhost:8000   -H "Content-Type: application/json"   -d '{
+    "input": "Check this authentication function for security issues:",
+    "code": "function authenticateUser(username, password) {
+      if(username == \"admin\" && password == \"password123\") {
+        return true;
+      }
+      return false;
+    }"
+  }'
+
+3. Performance Analysis
+curl -X POST http://localhost:8000   -H "Content-Type: application/json"   -d '{
+    "input": "Analyze this search function for performance:",
+    "code": "function searchArray(arr, item) {
+      return arr.filter(x => x === item).length > 0;
+    }"
+  }'
+
+4. Error Handling Review
+curl -X POST http://localhost:8000   -H "Content-Type: application/json"   -d '{
+    "input": "Review error handling in this function:",
+    "code": "function divideNumbers(a, b) {
+      return a/b;
+    }"
+  }'
+
+5. Full Codebase Review
+curl -X POST http://localhost:8000   -H "Content-Type: application/json"   -d '{
+    "input": "Please do a comprehensive review of example_code.js"
+  }'
