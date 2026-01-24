@@ -4,14 +4,14 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="hello_agent",
-    version="0.1.1",
-    author="rUv",
+    name="llm_task_orchestrator",
+    version="0.1.0",
+    author="Parvez Khan",
     author_email="",
-    description="Hello World Agent - ReACT Methodology Demonstration System",
+    description="LLM Task Orchestrator - ReACT-Based Autonomous Agent Framework",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/ruvnet/hello_world_agent",
+    url="https://github.com/Parvezkhan0/LLM-Task-Orchestrator",
     packages=find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -22,8 +22,10 @@ setup(
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
-        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Programming Language :: Python :: 3.11",
+        "Topic :: Software Development :: Libraries",
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Framework :: AsyncIO",
     ],
     python_requires=">=3.8",
     install_requires=[
@@ -35,12 +37,12 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "agent=agent.main:run",
+            "llm-orchestrator=engine.main:run",
         ],
     },
     include_package_data=True,
     package_data={
-        "agent": [
+        "engine": [
             "config/*.yaml",
             ".well-known/*",
             "docs/*",
