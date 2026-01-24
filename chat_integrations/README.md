@@ -1,74 +1,190 @@
-# Agentics Foundation Discord Bot Deployment Guide
+# 🤖 LLM Task Orchestrator — Discord Bot Deployment Guide
 
-This guide provides detailed, step-by-step instructions for deploying your Agentic ReAct agent script as a Discord bot via Supabase Edge Functions.
+**Serverless Discord Integration Using Supabase Edge Functions**
 
-## Step 1: Set Up the Discord Application
+---
 
-- Navigate to the [Discord Developer Portal](https://discord.com/developers/applications)
-- Create a new application named **Agentics Foundation** (or use an existing one)
+## 📌 Overview
 
-## Step 2: Configure the Bot
+This guide explains how to deploy your **LLM Task Orchestrator ReACT Agent** as a **fully serverless Discord bot** using **Supabase Edge Functions**.
 
-- Click **"Bot"** in the sidebar
-- Select **"Add Bot"** if you haven't created one yet
-- Enable the following permissions under **"Privileged Gateway Intents"**:
-  - **Message Content Intent**
-  - **Server Members Intent** (if needed)
-- Click **"Save Changes"**
+By following this setup, your autonomous agent becomes accessible directly from Discord via **slash commands**, allowing real-time user interaction while maintaining:
 
-## Step 3: Set Up Interaction Endpoint
+* Secure request verification
+* Low-latency edge execution
+* Stateless cloud deployment
+* Automatic scaling
+* Minimal infrastructure overhead
 
-- Click **"General Information"** in the sidebar
-- Under the **Interactions Endpoint URL** input box, you'll provide your Supabase Edge Function URL:
-  ```
-  https://your-supabase-project.functions.supabase.co/agentics-bot
-  ```
-- Note: You must verify the interaction endpoint with Discord by responding to Discord's verification request
+The Discord bot communicates with your agent using Discord’s **Interactions API** and Supabase’s globally distributed Deno runtime.
 
-## Step 4: Supabase Edge Functions Setup
+---
 
-1. **Install Supabase CLI** (if not installed):
-   ```bash
-   npm install -g supabase
-   ```
+## 🧠 Architecture Flow
 
-2. **Login and link your project**:
-   ```bash
-   supabase login
-   supabase link --project-ref your-supabase-project-ref
-   ```
-   Note: Do not use the `--anon-key` flag as it's not supported by the Supabase CLI.
+```
+Discord Slash Command
+        ↓
+Discord Interactions API
+        ↓
+Supabase Edge Function
+        ↓
+ReACT Agent Execution
+        ↓
+Tool Calls + Reasoning
+        ↓
+Agent Response
+        ↓
+Discord Chat Output
+```
 
-3. **Create a new Edge Function**:
-   ```bash
-   supabase functions new agentics-bot
-   ```
+---
 
-## Step 5: Modify the Supabase Function for Discord Interactions
+## 🧩 Prerequisites
 
-Discord interactions require specific handling. Your Edge Function (`index.ts`) needs to respond to Discord's interaction ping events:
+Before starting, ensure you have:
 
-```typescript
+* A Discord account
+* A Supabase account
+* Supabase CLI installed
+* An OpenRouter API key
+* Your ReACT agent ready (single file or generated agent)
+* Node.js installed (for Supabase CLI)
+
+---
+
+# ⚙ Step-by-Step Deployment Guide
+
+---
+
+## 1️⃣ Create Discord Application
+
+1. Open the Discord Developer Portal:
+
+```
+https://discord.com/developers/applications
+```
+
+2. Click **New Application**
+
+3. Name your application:
+
+```
+LLM Task Orchestrator Bot
+```
+
+(or any name you prefer)
+
+4. Save changes
+
+---
+
+## 2️⃣ Create Bot User
+
+1. Open your application
+2. Click **Bot** from sidebar
+3. Click **Add Bot**
+4. Confirm creation
+
+---
+
+## Enable Required Gateway Intents
+
+Under **Privileged Gateway Intents** enable:
+
+* ✅ Message Content Intent
+* ✅ Server Members Intent (optional but recommended)
+
+Click **Save Changes**
+
+---
+
+## 3️⃣ Prepare Supabase Project
+
+---
+
+### Install Supabase CLI
+
+```bash
+npm install -g supabase
+```
+
+---
+
+### Login to Supabase
+
+```bash
+supabase login
+```
+
+---
+
+### Link Your Project
+
+```bash
+supabase link --project-ref your-project-id
+```
+
+⚠ Important:
+
+Do NOT use:
+
+```
+--anon-key
+```
+
+Supabase CLI does not support it for edge deployment.
+
+---
+
+## 4️⃣ Create Supabase Edge Function
+
+Create a new function for your Discord bot:
+
+```bash
+supabase functions new llm-discord-bot
+```
+
+This generates:
+
+```
+supabase/functions/llm-discord-bot/
+```
+
+---
+
+## 5️⃣ Configure Discord Interaction Handler
+
+Discord sends interaction payloads that must be handled explicitly.
+
+Modify your Edge Function `index.ts`:
+
+---
+
+### Example Interaction Handler Template
+
+```ts
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
-// Discord Public Key for verifying interactions
+// Discord public key for request verification
 const DISCORD_PUBLIC_KEY = Deno.env.get("DISCORD_PUBLIC_KEY");
 
 serve(async (req) => {
-  const { type, data } = await req.json();
+  const body = await req.json();
 
-  // Discord Ping request type verification
-  if (type === 1) {
+  // Discord Ping Verification
+  if (body.type === 1) {
     return Response.json({ type: 1 });
   }
 
-  if (type === 2) {
-    const query = data.options?.[0]?.value;
+  // Slash Command Invocation
+  if (body.type === 2) {
+    const query = body.data.options?.[0]?.value;
 
     if (!query) {
       return Response.json({
         type: 4,
-        data: { content: "Please provide a query." },
+        data: { content: "Please provide a query." }
       });
     }
 
@@ -76,67 +192,299 @@ serve(async (req) => {
 
     return Response.json({
       type: 4,
-      data: { content: answer },
+      data: { content: answer }
     });
   }
 
-  return new Response("Unhandled request type", { status: 400 });
+  return new Response("Unhandled interaction type", { status: 400 });
 });
 ```
 
-**Important:** Discord interaction verification is recommended for security. You can use a library such as [discord-interactions](https://deno.land/x/discordeno/mod.ts) to verify requests.
+---
 
-## Step 6: Set Environment Variables
+### ⚠ Important Security Recommendation
 
-Use Supabase CLI to set secrets:
+Always verify incoming Discord requests using:
 
-1. **Your OpenRouter API Key**:
-   ```bash
-   supabase secrets set OPENROUTER_API_KEY=your_key --env-file ./supabase/functions/agentics-bot/.env
-   ```
+* Signature headers
+* Timestamp validation
 
-2. **Discord Public Key** (from Discord Developer Portal):
-   ```bash
-   supabase secrets set DISCORD_PUBLIC_KEY=your_discord_public_key --env-file ./supabase/functions/agentics-bot/.env
-   ```
+Recommended library:
 
-## Step 7: Deploy Your Supabase Function
-
-```bash
-supabase functions deploy agentics-bot --no-verify-jwt
+```
+discord-interactions
 ```
 
-## Step 8: Complete Discord Configuration
+This prevents spoofed requests.
 
-1. Back in Discord Developer Portal:
-   - Paste your Supabase function URL into **"Interactions Endpoint URL"**
-   - Save changes. Discord will verify your endpoint
+---
 
-2. Create slash commands for your bot:
-   - Go to **"Slash Commands"** in the sidebar
-   - Click **"New Command"**
-   - Create a command (e.g., `/ask`) with appropriate description and parameters
+## 6️⃣ Set Environment Secrets
 
-## Step 9: Invite Your Bot to Your Discord Server
+Supabase Edge Functions use encrypted secrets.
 
-1. Go to **OAuth2** → **URL Generator**:
-   - Select scope: **bot** and **applications.commands**
-   - Choose appropriate permissions (e.g., Send Messages)
-2. Copy the URL at the bottom and open it in your browser
-3. Select the Discord server to invite the bot
+---
 
-## Step 10: Testing & Verification
+### Set OpenRouter API Key
 
-- Test your Discord bot by invoking your configured Slash Command (e.g., `/ask your query`) in Discord
-- Confirm correct responses from your Supabase Edge Function
+```bash
+supabase secrets set OPENROUTER_API_KEY=your_key_here \
+--env-file ./supabase/functions/llm-discord-bot/.env
+```
 
-## Deployment Checklist
+---
 
-- [ ] Bot created on Discord
-- [ ] Interaction URL added
-- [ ] Edge function created in Supabase
-- [ ] Secrets configured (OpenRouter & Discord keys)
-- [ ] Function deployed
-- [ ] Bot invited and tested
+### Set Discord Public Key
 
-For a more detailed deployment plan, see [discord_bot/plans/discord_bot_deployment_plan.md](plans/discord_bot_deployment_plan.md).
+Retrieve from:
+
+Discord Developer Portal → General Information → Public Key
+
+Then set:
+
+```bash
+supabase secrets set DISCORD_PUBLIC_KEY=your_discord_public_key \
+--env-file ./supabase/functions/llm-discord-bot/.env
+```
+
+---
+
+## 7️⃣ Deploy Supabase Function
+
+Deploy your Discord bot backend:
+
+```bash
+supabase functions deploy llm-discord-bot --no-verify-jwt
+```
+
+After deployment you’ll receive:
+
+```
+Function URL:
+https://PROJECT_ID.functions.supabase.co/llm-discord-bot
+```
+
+Save this URL — it will be used in Discord.
+
+---
+
+## 8️⃣ Configure Discord Interaction Endpoint
+
+---
+
+### Set Interaction URL
+
+1. Open Discord Developer Portal
+2. Go to your application
+3. Click **General Information**
+4. Paste your Supabase Function URL:
+
+```
+https://PROJECT_ID.functions.supabase.co/llm-discord-bot
+```
+
+5. Click **Save Changes**
+
+Discord will automatically send a verification request.
+
+If your handler responds correctly with:
+
+```json
+{ "type": 1 }
+```
+
+Verification succeeds.
+
+---
+
+## 9️⃣ Create Slash Commands
+
+---
+
+1. Go to **Slash Commands** tab
+2. Click **New Command**
+
+Example:
+
+```
+Name: ask
+Description: Ask the AI agent a question
+```
+
+Add parameter:
+
+```
+Name: query
+Type: String
+Required: true
+```
+
+Save command.
+
+---
+
+## 🔗 Example Usage
+
+In Discord:
+
+```
+/ask query: What is 15 * 4?
+```
+
+Bot responds:
+
+```
+The result is 60
+```
+
+---
+
+## 🔑 10️⃣ Invite Bot To Server
+
+---
+
+### Generate Invite URL
+
+1. Go to **OAuth2 → URL Generator**
+2. Select Scopes:
+
+* bot
+* applications.commands
+
+3. Bot Permissions:
+
+* Send Messages
+* Read Message History
+
+4. Copy generated URL
+5. Open in browser
+6. Select server
+7. Authorize
+
+---
+
+## 11️⃣ Testing & Verification
+
+---
+
+### Test Slash Commands
+
+Inside Discord:
+
+```
+/ask query: Explain ReACT agents
+```
+
+---
+
+### Verify Supabase Logs
+
+Check deployment logs:
+
+```bash
+supabase functions logs llm-discord-bot
+```
+
+Confirm:
+
+* No runtime errors
+* Successful request handling
+* OpenRouter calls succeed
+
+---
+
+# ✅ Deployment Checklist
+
+Before going live, confirm:
+
+✔ Discord application created
+✔ Bot user created
+✔ Privileged intents enabled
+✔ Supabase project linked
+✔ Edge function created
+✔ Environment secrets configured
+✔ Function deployed successfully
+✔ Interaction URL verified
+✔ Slash commands created
+✔ Bot invited to server
+✔ Live test completed
+
+---
+
+# 🔐 Security Best Practices
+
+---
+
+### Request Verification
+
+Always validate:
+
+* Discord signature header
+* Timestamp freshness
+
+Prevents replay and spoof attacks.
+
+---
+
+### Secret Management
+
+* Never hardcode keys
+* Always use Supabase secrets
+* Rotate API keys periodically
+
+---
+
+### Rate Limiting
+
+Recommended:
+
+* Apply per-IP rate limiting
+* Implement cooldowns on commands
+
+---
+
+# ⚡ Performance Optimization
+
+---
+
+## Cold Start Performance
+
+Supabase Edge Functions provide:
+
+* Global edge execution
+* Sub-second cold starts
+* Automatic scaling
+
+---
+
+## Response Speed
+
+Optimize by:
+
+* Limiting ReACT loop iterations
+* Using streaming output (if enabled)
+* Using smaller LLM models when possible
+
+---
+
+# 🌍 Production Deployment Tips
+
+* Use custom domains for bot backend
+* Enable CORS only when needed
+* Monitor logs regularly
+* Add uptime monitoring
+* Enable error alerting
+
+---
+
+# 🏁 Final Notes
+
+With this setup, your **LLM Task Orchestrator agent becomes a production-grade Discord bot** capable of:
+
+* Autonomous reasoning
+* Real-time tool execution
+* Global low-latency responses
+* Secure cloud deployment
+
+This architecture avoids traditional servers, reduces infrastructure cost, and enables scalable AI-driven Discord automation.
+
