@@ -1,7 +1,5 @@
 # 🤖 Discord Bot Deployment Plan — LLM Task Orchestrator
 
-**File Location:**
-`LLM-Task-Orchestrator/chat_integrations/plans/discord_bot_deployment_plan.md`
 
 ---
 
