@@ -1,60 +1,234 @@
-# Meta Agent Generator for Deno
-**Created by rUv**
+# 🧠 Meta Agent Generator for Deno
 
-## Overview
+**Part of LLM Task Orchestrator**
 
-The Meta Agent Generator is an advanced TypeScript script designed for Deno that dynamically creates a complete, single-file ReACT agent based on user-defined configuration. The generated agent interleaves chain-of-thought reasoning with actionable steps to solve tasks step by step. It leverages the OpenRouter API (default model: `openai/o3-mini-high`) and utilizes Deno's secure sandboxing, fast cold start times, and built-in support for both CLI and HTTP deployments.
+---
 
-## Concept
+## 📌 Overview
 
-A **Meta Agent** is an agent that creates agents. This generator automates the creation of fully self-contained AI agents which can:
-- Interpret and execute complex user queries.
-- Use a variety of custom tools (e.g., arithmetic calculator, date/time, algebra solver, code executor).
-- Reflect on its chain-of-thought to self–optimize its final answer.
-- Communicate with other agents using multi–agent communication controls based on robots.txt (optional).
+The **Meta Agent Generator** is an advanced **TypeScript-based automation engine built for Deno** that dynamically creates fully self-contained **single-file ReACT agents** based on user-defined configuration. Instead of manually writing agent logic, tools, prompts, and execution pipelines, this generator **programmatically builds production-ready AI agents** from command-line parameters or API requests.
 
-## Features
+Each generated agent follows the **ReACT (Reasoning + Acting)** methodology, interleaving step-by-step reasoning with real tool execution to solve complex tasks autonomously.
 
-- **Dynamic Agent Creation:**  
-  Automatically assembles a complete agent from your configuration, including tool implementations, a robust ReACT loop, and self–reflection.
+The system is optimized for:
 
-- **Built-in Tools:**
-  - **Calculator:** Performs arithmetic calculations (e.g., "2 + 2" → "4")
-  - **DateTime:** Returns current time in ISO format
-  - **AlgebraSolver:** Solves linear equations (e.g., "3*x = 15" → "x = 5")
-  - **CodeExecutor:** Runs JavaScript/TypeScript code securely (e.g., factorial calculations)
+* Fast cold starts
+* Edge and serverless deployments
+* CLI and HTTP server usage
+* Secure sandboxed execution
+* OpenRouter LLM integration
 
-- **User-Defined Customization:**  
-  Configure:
-  - **Tools:** Add or modify tool implementations with custom functions
-  - **System Prompts:** Customize role instructions and formatting guidelines
-  - **Model Selection:** Choose any OpenRouter-compatible model (default: `openai/o3-mini-high`)
-  - **Deployment Settings:** Generate agents for local CLI use or as an HTTP server
+Default model configuration uses:
 
-- **Optional NPM Package Integration:**  
-  Import and integrate npm packages via Deno's npm support by providing a comma-separated list of packages.
+```
+openai/o3-mini-high
+```
 
-- **Multi-Agent Communication Controls:**  
-  Optionally check a target agent's robots.txt to control inter-agent communication.
+but can be overridden with any OpenRouter-supported model.
 
-- **Neuro–Symbolic Reasoning Enhancements:**  
-  The system prompt instructs the agent to use specialized tools for arithmetic, time, and symbolic tasks, enabling exact computations and improved reasoning.
+---
 
-- **Self–Reflection:**  
-  An optional reflection step reviews the chain-of-thought and final answer, allowing the agent to catch and correct errors.
+## 🧩 Concept: What Is a Meta Agent?
 
-## Command-Line Arguments
+A **Meta Agent** is an agent that **creates other agents**.
 
-The meta-agent supports extensive configuration through command-line arguments. Here's a comprehensive guide to all available options:
+Instead of deploying one hardcoded AI assistant, the Meta Agent Generator allows you to:
 
-### Quick Start Examples
+* Programmatically generate task-specific agents
+* Customize toolkits per agent
+* Define system prompts dynamically
+* Control deployment mode (CLI / HTTP)
+* Enable or disable advanced features
 
-```sh
-# Basic usage - Create a local CLI agent
+The result is a **ready-to-run agent file** that can be deployed instantly.
+
+---
+
+## 🚀 What Can Generated Agents Do?
+
+Generated agents can:
+
+* Interpret and solve complex user queries
+* Execute real tools (math, time, symbolic logic, code)
+* Self-reflect and optimize answers
+* Communicate with other agents
+* Run as CLI tools or HTTP servers
+* Deploy to edge platforms
+* Integrate with Discord bots
+
+---
+
+## ✨ Core Features
+
+---
+
+### 🔧 Dynamic Agent Generation
+
+The Meta Agent Generator automatically assembles:
+
+* Tool implementations
+* ReACT reasoning loop
+* Execution engine
+* Prompt templates
+* Reflection logic
+* Deployment handlers
+
+All into **one optimized standalone TypeScript file**.
+
+---
+
+### 🛠 Built-in Tool Suite
+
+Generated agents ship with production-ready tools:
+
+#### Calculator Tool
+
+Performs arithmetic safely.
+
+Example:
+
+```
+2 + 2 → 4
+```
+
+---
+
+#### DateTime Tool
+
+Returns system time in ISO format.
+
+Example:
+
+```
+2026-01-24T15:32:10.000Z
+```
+
+---
+
+#### Algebra Solver Tool
+
+Solves linear equations.
+
+Supported formats:
+
+```
+x + a = b
+x - a = b
+a * x = b
+x / a = b
+```
+
+Example:
+
+```
+3*x = 15 → x = 5
+```
+
+---
+
+#### Code Executor Tool
+
+Executes sandboxed JavaScript or TypeScript.
+
+Supports:
+
+* async / await
+* stdout capture
+* error isolation
+
+Example:
+
+```
+console.log("Hello World")
+```
+
+---
+
+### ⚙ User Customization Controls
+
+The generator allows full customization of:
+
+* Tool definitions
+* System prompt behavior
+* Output formatting
+* Model selection
+* Runtime settings
+* Deployment mode
+
+---
+
+### 📦 Optional NPM Package Integration
+
+Using Deno’s native npm support, generated agents can import packages dynamically.
+
+Example:
+
+```
+mathjs, moment, lodash
+```
+
+These are auto-injected into the generated agent code.
+
+---
+
+### 🌐 Multi-Agent Communication Controls
+
+Optional support for **robots.txt-based agent communication rules** allows:
+
+* Controlled inter-agent access
+* Permission-based agent federation
+* Safe cross-agent querying
+
+---
+
+### 🧮 Neuro-Symbolic Reasoning Enhancement
+
+The system prompt enforces usage of symbolic tools for:
+
+* Arithmetic
+* Date/time operations
+* Algebraic reasoning
+
+This improves accuracy and reduces hallucination risk.
+
+---
+
+### 🔁 Self-Reflection Loop
+
+When enabled, generated agents perform a post-answer review step:
+
+* Validates correctness
+* Detects reasoning mistakes
+* Improves final response quality
+
+---
+
+# 🧪 Command-Line Usage
+
+The Meta Agent Generator is fully configurable using CLI flags.
+
+---
+
+## ⚡ Quick Start Examples
+
+---
+
+### Basic CLI Agent Generation
+
+Creates a local terminal agent:
+
+```bash
 deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
   --agentName="MathBot"
+```
 
-# Full configuration - Create an HTTP server agent
+---
+
+### Full HTTP Server Agent Generation
+
+Creates an HTTP-deployed agent:
+
+```bash
 deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
   --agentName="CalculatorAgent" \
   --model="openai/gpt-4" \
@@ -68,233 +242,338 @@ deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
   --advancedArgs='{"logLevel":"debug","memoryLimit":256,"timeout":30000}'
 ```
 
-### Required Deno Permissions
+---
 
-| Permission | Description | Usage |
-|------------|-------------|-------|
-| `--allow-net` | Network access | API calls, HTTP server |
-| `--allow-env` | Environment variables | API keys, configuration |
-| `--allow-run` | Execute commands | CodeExecutor tool |
-| `--allow-write` | File system writes | Generate agent files |
+# 🔐 Required Deno Permissions
 
-### Core Arguments
+| Permission    | Purpose               | Used For                |
+| ------------- | --------------------- | ----------------------- |
+| --allow-net   | Network access        | API calls, HTTP server  |
+| --allow-env   | Environment variables | API keys, config        |
+| --allow-run   | Process execution     | CodeExecutor tool       |
+| --allow-write | File creation         | Agent generation output |
 
-#### Agent Identity
-```sh
---agentName=<string>       # Agent identifier (default: "HelloWorldAgent")
-                          # Used in file naming and agent identification
-                          # Example: --agentName="MathBot"
+---
 
---model=<string>          # OpenRouter model (default: "openai/o3-mini-high")
-                          # Supported: gpt-4, claude-2, llama-2, etc.
-                          # Example: --model="openai/gpt-4"
+# ⚙ Core CLI Arguments
+
+---
+
+## Agent Identity
+
+### --agentName
+
+```
+Default: HelloWorldAgent
 ```
 
-#### Deployment Configuration
-```sh
---deployment=<mode>       # Deployment mode (default: "local")
-                          # Options:
-                          #   local: Run as CLI tool
-                          #   http: Run as HTTP server
-                          # Example: --deployment=http
+Used for:
 
---outputFile=<path>       # Generated file path (default: "./generated_agent.ts")
-                          # Supports relative/absolute paths
-                          # Example: --outputFile="./agents/math_bot.ts"
+* Generated file naming
+* Agent identification
+* Runtime logs
+
+Example:
+
+```bash
+--agentName="MathBot"
 ```
 
-### Feature Controls
+---
 
-#### Agent Capabilities
-```sh
---enableReflection=<bool> # Enable self-optimization (default: true)
-                          # Adds post-response reflection step
-                          # Helps catch and correct errors
-                          # Example: --enableReflection=true
+### --model
 
---enableMultiAgentComm=<bool> # Multi-agent support (default: false)
-                              # Implements robots.txt protocol
-                              # Enables agent discovery
-                              # Example: --enableMultiAgentComm=true
+Defines the OpenRouter model.
+
+Default:
+
+```
+openai/o3-mini-high
 ```
 
-#### External Dependencies
-```sh
---npmPackages=<string>    # Comma-separated npm packages
-                          # Auto-imports via Deno's npm support
-                          # Example: --npmPackages="mathjs,moment,lodash"
+Example:
+
+```bash
+--model="openai/gpt-4"
 ```
 
-### Advanced Configuration
+---
 
-#### Performance Tuning
-```sh
---advancedArgs=<json>     # Fine-tuning options as JSON
+## Deployment Configuration
+
+---
+
+### --deployment
+
+Controls execution mode:
+
+```
+local → CLI execution
+http  → HTTP API server
+```
+
+Example:
+
+```bash
+--deployment=http
+```
+
+---
+
+### --outputFile
+
+Defines generated file location.
+
+Example:
+
+```bash
+--outputFile="./agents/math_agent.ts"
+```
+
+---
+
+## Feature Controls
+
+---
+
+### --enableReflection
+
+Enables post-response self-check loop.
+
+Default:
+
+```
+true
+```
+
+---
+
+### --enableMultiAgentComm
+
+Enables robots.txt communication system.
+
+Default:
+
+```
+false
+```
+
+---
+
+## External Dependencies
+
+---
+
+### --npmPackages
+
+Comma-separated list of packages.
+
+Example:
+
+```bash
+--npmPackages="mathjs,moment,lodash"
+```
+
+---
+
+# ⚡ Advanced Performance Configuration
+
+---
+
+### --advancedArgs
+
+Accepts JSON configuration:
+
+```json
 {
-  "logLevel": "debug",     // Logging level (debug|info|warn|error)
-  "memoryLimit": 256,      // Memory cap in MB
-  "timeout": 30000,        // Request timeout (ms)
-  "maxIterations": 10,     // Max reasoning steps
-  "temperature": 0.7,      // Model temperature
-  "streamResponse": true,  // Enable streaming
-  "retryAttempts": 3,     // API retry count
-  "cacheSize": 1000,      // Response cache size
-  "contextWindow": 4096,   // Token context window
-  "batchSize": 32         // Batch processing size
+  "logLevel": "debug",
+  "memoryLimit": 256,
+  "timeout": 30000,
+  "maxIterations": 10,
+  "temperature": 0.7,
+  "streamResponse": true,
+  "retryAttempts": 3,
+  "cacheSize": 1000,
+  "contextWindow": 4096,
+  "batchSize": 32
 }
 ```
 
-### HTTP Server Options
+---
 
-When using `--deployment=http`, additional options are available:
+## Parameter Breakdown
 
-#### Server Configuration
-```sh
---port=<number>          # Server port (default: 8000)
-                         # Example: --port=3000
+| Setting        | Purpose                       |
+| -------------- | ----------------------------- |
+| logLevel       | Debug verbosity               |
+| memoryLimit    | Runtime RAM cap (MB)          |
+| timeout        | Request timeout (ms)          |
+| maxIterations  | Max ReACT steps               |
+| temperature    | Model creativity              |
+| streamResponse | Enable streaming output       |
+| retryAttempts  | API retry attempts            |
+| cacheSize      | Response caching              |
+| contextWindow  | Token window limit            |
+| batchSize      | Parallel execution batch size |
 
---hostname=<string>      # Server hostname (default: "0.0.0.0")
-                         # Example: --hostname="localhost"
+---
+
+# 🌐 HTTP Server Options
+
+When using `--deployment=http`:
+
+---
+
+### Server Settings
+
+```bash
+--port=3000
+--hostname=localhost
 ```
 
-#### Security & Performance
-```sh
---cors=<boolean>         # Enable CORS headers
-                         # Example: --cors=true
+---
 
---rateLimit=<number>     # Max requests per IP/minute
-                         # Example: --rateLimit=60
+### Security & Performance
 
---timeout=<number>       # Request timeout (ms)
-                         # Example: --timeout=30000
+```bash
+--cors=true
+--rateLimit=60
+--timeout=30000
 ```
 
-#### TLS/SSL Support
-```sh
---cert=<path>           # TLS certificate file
-                         # Example: --cert=./cert.pem
+---
 
---key=<path>            # TLS private key file
-                         # Example: --key=./key.pem
+### TLS / HTTPS
+
+```bash
+--cert=./cert.pem
+--key=./key.pem
 ```
 
-### Environment Variables
+---
 
-The following environment variables can be used to override defaults:
+# 🌍 Environment Variables
 
-```sh
-OPENROUTER_API_KEY      # Required: OpenRouter API key
-OPENROUTER_MODEL        # Optional: Default model
-PORT                    # Optional: Server port
-HOST                    # Optional: Server hostname
-LOG_LEVEL              # Optional: Logging verbosity
-MEMORY_LIMIT           # Optional: Memory cap (MB)
+These override CLI defaults:
+
+```env
+OPENROUTER_API_KEY   # Required
+OPENROUTER_MODEL     # Optional
+PORT                 # HTTP port
+HOST                 # Host address
+LOG_LEVEL            # Logging verbosity
+MEMORY_LIMIT         # Memory cap
 ```
 
-### Examples
+---
 
-1. **Basic Local Agent**
-```sh
-deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
-  --agentName="MathBot"
+# 🧠 Tool Specifications
+
+---
+
+## Calculator Tool
+
+Supports:
+
+* * * * /
+* Parentheses
+* Floating-point values
+
+Example:
+
+```
+Calculator|2 + 2 * (3 - 1)
 ```
 
-2. **Advanced HTTP Server**
-```sh
-deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
-  --deployment=http \
-  --port=3000 \
-  --hostname="localhost" \
-  --cors=true \
-  --rateLimit=60 \
-  --cert=./cert.pem \
-  --key=./key.pem \
-  --advancedArgs='{"logLevel":"debug","timeout":30000}'
+---
+
+## DateTime Tool
+
+Returns system time:
+
+```
+DateTime|
 ```
 
-3. **Full-Featured Agent**
-```sh
-deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
-  --agentName="SuperBot" \
-  --model="openai/gpt-4" \
-  --deployment=http \
-  --outputFile="./agents/super_bot.ts" \
-  --enableReflection=true \
-  --enableMultiAgentComm=true \
-  --npmPackages="mathjs,moment,lodash" \
-  --advancedArgs='{
-    "logLevel": "debug",
-    "memoryLimit": 512,
-    "timeout": 30000,
-    "maxIterations": 15,
-    "temperature": 0.8,
-    "streamResponse": true,
-    "retryAttempts": 3,
-    "cacheSize": 2000,
-    "contextWindow": 8192,
-    "batchSize": 64
-  }'
+---
+
+## Algebra Solver Tool
+
+Solves linear equations.
+
+Example:
+
+```
+AlgebraSolver|3*x = 15
 ```
 
-## Tool Specifications
+---
 
-### Calculator Tool
-- Supports basic arithmetic operations: +, -, *, /
-- Handles parentheses and floating-point numbers
-- Input validation prevents code injection
-- Example: `Calculator|2 + 2 * (3 - 1)`
+## Code Executor Tool
 
-### DateTime Tool
-- Returns current system time in ISO format
-- No input required
-- Example: `DateTime|`
+Runs sandboxed code.
 
-### AlgebraSolver Tool
-- Solves linear equations in the form:
-  - x + a = b
-  - x - a = b
-  - a * x = b
-  - x / a = b
-- Returns solution in the form "x = value"
-- Example: `AlgebraSolver|3*x = 15`
+Example:
 
-### CodeExecutor Tool
-- Executes JavaScript/TypeScript code in a sandboxed environment
-- Supports async/await
-- Captures stdout and stderr
-- Example: `CodeExecutor|console.log("Hello, World!")`
+```
+CodeExecutor|console.log("Hello World")
+```
 
-## Security Considerations
+Supports:
 
-1. **Sandboxed Execution:**
-   - CodeExecutor tool runs in a restricted Deno environment
-   - No file system access by default
-   - Network access can be controlled via permissions
+* async functions
+* stdout capture
+* error handling
 
-2. **API Key Management:**
-   - OpenRouter API key should be set via environment variable
-   - Never hardcode API keys in the agent code
+---
 
-3. **Input Validation:**
-   - All tool inputs are validated before execution
-   - Calculator prevents arbitrary code execution
-   - AlgebraSolver enforces strict equation format
+# 🔐 Security Design
 
-## Deployment
+---
 
-The meta-agent and generated agents support multiple deployment scenarios:
+### Sandboxed Execution
 
-### Meta-Agent Server Mode
+* No file system access by default
+* Controlled network permissions
+* Restricted runtime environment
 
-Run the meta-agent as an HTTP server to create agents via REST API:
+---
 
-```sh
-# Start meta-agent server with custom port (default: 8000)
+### API Key Management
+
+* Environment variable only
+* Never hardcoded
+* Secure injection at runtime
+
+---
+
+### Input Validation
+
+* Strict calculator regex validation
+* Algebra solver format enforcement
+* Tool parameter sanitization
+
+---
+
+# 🚀 Deployment Scenarios
+
+---
+
+## Meta-Agent Server Mode
+
+Run generator as an HTTP API:
+
+```bash
 deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
   --server=true \
   --port=3000
+```
 
-# Create agent via POST request
+---
+
+### Create Agent via API
+
+```bash
 curl -X POST http://localhost:3000 \
   -H "Content-Type: application/json" \
   -d '{
@@ -302,7 +581,7 @@ curl -X POST http://localhost:3000 \
     "model": "openai/gpt-4",
     "deployment": "http",
     "enableReflection": true,
-    "tools": [...],
+    "tools": [],
     "systemPrompt": "...",
     "npmPackages": ["mathjs"],
     "advancedArgs": {
@@ -310,8 +589,13 @@ curl -X POST http://localhost:3000 \
       "memoryLimit": 256
     }
   }'
+```
 
-# Response includes:
+---
+
+### Response Format
+
+```json
 {
   "message": "Agent generated successfully",
   "outputPath": "./generated_agent.ts",
@@ -319,141 +603,151 @@ curl -X POST http://localhost:3000 \
 }
 ```
 
-### Generated Agent Deployment
+---
 
-Generated agents can be deployed in various scenarios:
-
-- **Local CLI Execution:**  
-  Quickly test and iterate on your agent using Deno's CLI.
-  ```sh
-  deno run --allow-net --allow-env --allow-run generated_agent.ts "What is 2+2?"
-  ```
-
-- **HTTP Server Deployment:**  
-  Deploy as an HTTP server with customizable options:
-  ```sh
-  # Start with custom host/port
-  deno run --allow-net --allow-env --allow-run generated_agent.ts \
-    --deployment=http \
-    --hostname=0.0.0.0 \
-    --port=3000 \
-    --cert=./cert.pem \
-    --key=./key.pem
-
-  # Available Deno server arguments:
-  # --port=<number>       Port to listen on (default: 8000)
-  # --hostname=<string>   Hostname to listen on (default: 0.0.0.0)
-  # --cert=<path>        Path to TLS certificate file
-  # --key=<path>         Path to TLS private key file
-  # --cors               Enable CORS headers
-  # --rateLimit=<number> Max requests per IP per minute
-  # --timeout=<number>   Request timeout in milliseconds
-  ```
-
-- **Edge & Serverless:**  
-  Leverage Deno's low cold start times and secure sandboxing to run the agent in global serverless environments (compatible with Deno Deploy, Supabase Edge, Fly.io, etc.).
-
-- **Discord Bot Integration:**  
-  Deploy the agent as a Discord bot using Supabase Edge Functions:
-  ```sh
-  # 1. Create a Supabase Edge Function
-  supabase functions new discord-agent-bot
-  
-  # 2. Copy the agent code to the function
-  cp generated_agent.ts .supabase/functions/discord-agent-bot/index.ts
-  
-  # 3. Modify the HTTP handler to handle Discord interactions
-  # (See discord_bot/plans/discord_bot_deployment_plan.md for details)
-  
-  # 4. Set the OpenRouter API key
-  supabase secrets set OPENROUTER_API_KEY=your_key
-  
-  # 5. Deploy the function
-  supabase functions deploy discord-agent-bot --no-verify-jwt
-  
-  # 6. Configure your Discord bot in the Discord Developer Portal
-  # - Set the Interactions Endpoint URL to your Supabase function URL
-  # - Create slash commands for your bot
-  # - Invite the bot to your server
-  ```
-  
-- **Optional Multi-Agent Communication:**  
-  Enable communication between agents by checking robots.txt of target agents.
-
-## Error Handling
-
-The agent includes comprehensive error handling:
-- Tool execution errors are caught and returned as readable messages
-- API communication errors include detailed status codes
-- Invalid input formats trigger helpful validation messages
-- Network timeouts and retries are handled gracefully
-
-## Performance Optimization
-
-1. **Cold Start Time:**
-   - Single file design minimizes initialization
-   - No external dependencies required
-   - Efficient tool implementation
-
-2. **Memory Usage:**
-   - Configurable memory limits via advancedArgs
-   - Automatic cleanup of completed operations
-   - Efficient string handling for large inputs
-
-3. **Response Time:**
-   - Streaming responses for real-time feedback
-   - Parallel tool execution where possible
-   - Optimized regex patterns for parsing
-
-## Conclusion
-
-The Meta Agent Generator empowers developers to create custom, flexible, and secure AI agents without extensive manual coding. By simply adjusting configuration options and using command-line arguments, you can generate an agent that meets your domain-specific requirements and deployment environment. Enjoy building and deploying your own autonomous agents with this next-generation tool – created by rUv.
-
+# 📦 Generated Agent Deployment
 
 ---
 
-## Discord Bot Integration
+## CLI Execution
 
-The Meta Agent Generator can be used to create agents that are deployed as Discord bots using Supabase Edge Functions. This integration allows users to interact with your agent directly through Discord's slash commands.
+```bash
+deno run --allow-net --allow-env --allow-run generated_agent.ts "What is 2+2?"
+```
 
-### Discord Bot Deployment Process
-
-1. **Generate the Agent:**
-   ```sh
-   deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
-     --agentName="DiscordBot" \
-     --model="openai/o3-mini-high" \
-     --deployment=http \
-     --outputFile="./discord_bot/agent.ts"
-   ```
-
-2. **Modify the HTTP Handler:**
-   Update the HTTP handler in the generated agent to handle Discord's interaction format. Discord sends payloads differently, so you must adjust your HTTP handler to parse and reply according to Discord's webhook format.
-
-3. **Deploy to Supabase:**
-   ```sh
-   # Create a new Edge Function
-   supabase functions new discord-agent-bot
-   
-   # Copy the agent code to the function
-   cp discord_bot/agent.ts .supabase/functions/discord-agent-bot/index.ts
-   
-   # Set the OpenRouter API key
-   supabase secrets set OPENROUTER_API_KEY=your_key
-   
-   # Deploy the function
-   supabase functions deploy discord-agent-bot --no-verify-jwt
-   ```
-
-4. **Configure Discord Bot:**
-   - Create a new application in the [Discord Developer Portal](https://discord.com/developers/applications)
-   - Add a bot to the application
-   - Enable the Message Content Intent
-   - Create slash commands for the bot
-   - Set the Interactions Endpoint URL to your Supabase function URL
-   - Generate an invite link and add the bot to your server
-
-For a detailed deployment plan, see [discord_bot/plans/discord_bot_deployment_plan.md](../discord_bot/plans/discord_bot_deployment_plan.md).
 ---
 
-*For further questions or contributions, please contact rUv or visit the project repository.*
+## HTTP Server Deployment
+
+```bash
+deno run --allow-net --allow-env --allow-run generated_agent.ts \
+  --deployment=http \
+  --hostname=0.0.0.0 \
+  --port=3000
+```
+
+---
+
+## Edge & Serverless
+
+Optimized for:
+
+* Supabase Edge
+* Deno Deploy
+* Fly.io
+* Cloudflare Workers (via compatibility layer)
+
+---
+
+# 🤖 Discord Bot Deployment
+
+---
+
+## Step 1 — Generate Discord Agent
+
+```bash
+deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
+  --agentName="DiscordBot" \
+  --deployment=http \
+  --outputFile="./discord_bot/agent.ts"
+```
+
+---
+
+## Step 2 — Create Supabase Function
+
+```bash
+supabase functions new discord-agent-bot
+```
+
+---
+
+## Step 3 — Copy Generated Agent
+
+```bash
+cp discord_bot/agent.ts .supabase/functions/discord-agent-bot/index.ts
+```
+
+---
+
+## Step 4 — Set API Key
+
+```bash
+supabase secrets set OPENROUTER_API_KEY=your_key
+```
+
+---
+
+## Step 5 — Deploy
+
+```bash
+supabase functions deploy discord-agent-bot --no-verify-jwt
+```
+
+---
+
+## Step 6 — Discord Configuration
+
+* Create application
+* Add bot
+* Enable Message Content Intent
+* Add slash commands
+* Set interaction endpoint URL
+* Invite bot to server
+
+---
+
+# ⚠ Error Handling System
+
+Generated agents include:
+
+* Tool execution error catching
+* API error reporting
+* Input validation errors
+* Timeout handling
+* Automatic retry logic
+
+---
+
+# ⚡ Performance Optimization
+
+---
+
+## Cold Start
+
+* Single-file output
+* Minimal imports
+* Fast Deno startup
+
+---
+
+## Memory Efficiency
+
+* Runtime memory caps
+* Garbage cleanup
+* Efficient prompt buffering
+
+---
+
+## Response Speed
+
+* Streaming support
+* Parallel tool execution
+* Optimized parsing patterns
+
+---
+
+# 🏁 Final Notes
+
+The **Meta Agent Generator inside LLM Task Orchestrator** provides a production-grade foundation for building autonomous AI agents without manually writing boilerplate logic.
+
+With a single command you can generate:
+
+* CLI tools
+* HTTP APIs
+* Discord bots
+* Edge functions
+* Multi-agent systems
+
+This approach dramatically reduces development time while preserving full control over agent behavior, performance, and security.
+

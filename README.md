@@ -402,15 +402,3 @@ See `LICENSE` file for details.
 * Inspired by ReACT research
 * Community-driven architecture
 
----
-
-If you'd like, I can also generate:
-
-* Badges section
-* Shields.io stats
-* Architecture diagram markdown
-* API usage examples
-* Contribution guidelines
-* Discord deployment README
-
-Just say the word 😎
