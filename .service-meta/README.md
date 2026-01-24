@@ -749,5 +749,4 @@ With a single command you can generate:
 * Edge functions
 * Multi-agent systems
 
-This approach dramatically reduces development time while preserving full control over agent behavior, performance, and security.
-
+This approach dramatically reduces development time while preserving full control over agent behavior, performance, & security.
