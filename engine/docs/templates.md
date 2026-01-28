@@ -1,19 +1,22 @@
 # Templates Guide
 
 ## Overview
-Templates in the Hello World Agent are used to structure the agent's responses, prompts, and interactions. This guide explains how to customize these templates to modify the agent's behavior and output format.
+
+Templates in the LLM Task Orchestrator are used to structure the orchestrator's responses, prompts, and interactions. This guide explains how to customize these templates to modify the orchestrator's behavior and output format.
 
 ## Template Locations
+
 Templates are primarily stored in `agent/config/prompts.yaml`. These templates use YAML syntax and support variable interpolation.
 
 ## Template Types
 
 ### 1. System Prompts
-System prompts define the agent's core behavior and personality. They are found in the `prompts.yaml` file:
+
+System prompts define the orchestrator's core behavior and personality. They are found in the `prompts.yaml` file:
 
 ```yaml
 system_prompt: |
-  You are an AI assistant focused on {task_type}.
+  You are an AI system responsible for orchestrating {task_type} workflows.
   Your primary goal is to {goal_description}.
   
   Approach:
@@ -23,6 +26,7 @@ system_prompt: |
 ```
 
 ### 2. Task Templates
+
 Task templates define how different types of tasks are processed:
 
 ```yaml
@@ -42,6 +46,7 @@ execute_task: |
 ```
 
 ### 3. Output Templates
+
 Output templates control how results are presented:
 
 ```yaml
@@ -58,14 +63,18 @@ analysis_output: |
 ## Customizing Templates
 
 ### Adding Variables
+
 You can add new variables to templates using curly braces:
+
 ```yaml
 custom_template: |
   Processing {custom_var1} with {custom_var2}
 ```
 
 ### Modifying Format
+
 Change the structure and formatting:
+
 ```yaml
 # Original
 result: "Result: {output}"
@@ -78,8 +87,10 @@ result: |
 ```
 
 ### Adding New Templates
+
 1. Open `agent/config/prompts.yaml`
 2. Add your new template:
+
 ```yaml
 my_template: |
   Custom output for {scenario}
@@ -89,17 +100,21 @@ my_template: |
 ```
 
 ### Template Variables
+
 Common variables you can use:
-- `{task_type}`: Type of task (research/execute/analyze)
-- `{prompt}`: User's input prompt
-- `{timestamp}`: Current time
-- `{result}`: Task results
-- `{status}`: Task status
+
+* `{task_type}`: Type of task (research/execute/analyze)
+* `{prompt}`: User's input prompt
+* `{timestamp}`: Current time
+* `{result}`: Task results
+* `{status}`: Task status
 
 ## Advanced Template Features
 
 ### Conditional Content
+
 Use YAML anchors and aliases for conditional content:
+
 ```yaml
 templates:
   base: &base |
@@ -115,7 +130,9 @@ templates:
 ```
 
 ### Multi-line Formatting
+
 YAML supports various multi-line string formats:
+
 ```yaml
 # Literal Block (preserves newlines)
 template: |
@@ -130,7 +147,9 @@ template: >
 ```
 
 ### Template Inheritance
+
 Templates can inherit from others:
+
 ```yaml
 base_template: &base
   header: "Standard Header"
@@ -150,10 +169,11 @@ custom_template:
 5. **Version Control**: Track template changes in version control
 
 ## Example: Complete Template Set
+
 ```yaml
 # System Configuration
 system:
-  name: "Hello World Agent"
+  name: "LLM Task Orchestrator"
   version: "1.0"
   
 # Task Templates
@@ -196,25 +216,32 @@ output:
 ## Troubleshooting
 
 ### Common Issues
+
 1. **Variable Not Found**
-   - Check variable names match exactly
-   - Verify variables are passed correctly
+
+   * Check variable names match exactly
+   * Verify variables are passed correctly
 
 2. **Formatting Issues**
-   - Validate YAML syntax
-   - Check indentation
-   - Ensure proper use of | or > for multi-line strings
+
+   * Validate YAML syntax
+   * Check indentation
+   * Ensure proper use of | or > for multi-line strings
 
 3. **Template Not Loading**
-   - Verify file path
-   - Check YAML structure
-   - Validate template name
+
+   * Verify file path
+   * Check YAML structure
+   * Validate template name
 
 ### Testing Templates
-Test your templates using the agent's debug mode:
+
+Test your templates using the orchestrator's debug mode:
+
 ```bash
 ./start.sh --prompt "test prompt" --task research --debug
 ```
 
 ## Conclusion
-Templates provide a powerful way to customize the Hello World Agent's behavior and output. By understanding and modifying these templates, you can create a unique and effective agent experience tailored to your needs.
+
+Templates provide a powerful way to customize the LLM Task Orchestrator's behavior and output. By understanding and modifying these templates, you can create a unique and effective orchestration experience tailored to your needs.
