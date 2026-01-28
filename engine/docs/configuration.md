@@ -1,34 +1,42 @@
 # Configuration Guide
 
 ## Overview
-The Hello World Agent is highly configurable, allowing you to tailor its behavior to your specific needs. This guide provides detailed instructions on how to configure the agent using YAML files located in the `agent/config/` directory.
+
+The LLM Task Orchestrator is highly configurable, allowing you to tailor its behavior to your specific needs. This guide provides detailed instructions on how to configure the orchestrator using YAML files located in the `agent/config/` directory.
 
 ## Configuration Files
+
 The main configuration files are:
-- `agents.yaml`: Defines agent-specific settings.
-- `tasks.yaml`: Configures task parameters and behaviors.
-- `analysis.yaml`: Sets rules for data analysis.
-- `prompts.yaml`: Contains templates for system prompts and responses.
+
+* `agents.yaml`: Defines orchestrator-specific settings.
+* `tasks.yaml`: Configures task parameters and behaviors.
+* `analysis.yaml`: Sets rules for data analysis.
+* `prompts.yaml`: Contains templates for system prompts and responses.
 
 ## agents.yaml
-This file contains settings specific to the agent's operation.
+
+This file contains settings specific to the orchestrator's operation.
 
 ### Example Configuration
+
 ```yaml
-agent_name: "Hello World Agent"
+agent_name: "LLM Task Orchestrator"
 version: "1.0"
 default_task: "research"
 ```
 
-### Customizing Agent Settings
-- **agent_name**: The display name of the agent.
-- **version**: The current version of the agent.
-- **default_task**: The default task type when none is specified.
+### Customizing Orchestrator Settings
+
+* **agent_name**: The display name of the orchestrator.
+* **version**: The current version of the orchestrator.
+* **default_task**: The default task type when none is specified.
 
 ## tasks.yaml
+
 This file configures task-related parameters.
 
 ### Example Configuration
+
 ```yaml
 tasks:
   research:
@@ -42,15 +50,18 @@ tasks:
 ```
 
 ### Customizing Task Parameters
-- **depth**: The level of detail for research tasks.
-- **focus_areas**: Specific areas of interest for research.
-- **safety_checks**: Enable or disable safety checks for execution tasks.
-- **max_runtime**: Maximum allowed runtime for execution tasks (in seconds).
+
+* **depth**: The level of detail for research tasks.
+* **focus_areas**: Specific areas of interest for research.
+* **safety_checks**: Enable or disable safety checks for execution tasks.
+* **max_runtime**: Maximum allowed runtime for execution tasks (in seconds).
 
 ## analysis.yaml
+
 This file sets rules for data analysis.
 
 ### Example Configuration
+
 ```yaml
 analysis:
   methods:
@@ -60,16 +71,19 @@ analysis:
 ```
 
 ### Customizing Analysis Rules
-- **methods**: List of analysis methods to apply.
-- **output_format**: Format of the analysis output (e.g., summary, detailed).
+
+* **methods**: List of analysis methods to apply.
+* **output_format**: Format of the analysis output (e.g., summary, detailed).
 
 ## prompts.yaml
+
 This file contains templates for system prompts and responses.
 
 ### Example Configuration
+
 ```yaml
 system_prompt: |
-  You are an AI assistant focused on {task_type}.
+  You are an AI system responsible for orchestrating {task_type} workflows.
   Your primary goal is to {goal_description}.
 
 prompts:
@@ -78,20 +92,23 @@ prompts:
 ```
 
 ### Customizing Prompts
-- **system_prompt**: The main prompt that defines the agent's behavior.
-- **greeting**: The message displayed when the agent starts.
-- **farewell**: The message displayed when the agent ends.
+
+* **system_prompt**: The main prompt that defines the orchestrator's behavior.
+* **greeting**: The message displayed when the orchestrator starts.
+* **farewell**: The message displayed when the orchestrator ends.
 
 ## Advanced Configuration
 
 ### Environment Variables
-The agent can use environment variables for sensitive information, such as API keys. Define these in a `.env` file:
+
+The orchestrator can use environment variables for sensitive information, such as API keys. Define these in a `.env` file:
 
 ```env
 OPENROUTER_API_KEY=your_api_key_here
 ```
 
 ### Dynamic Configuration
+
 For advanced users, consider implementing dynamic configuration loading in `agent/config/config_loader.py`. This allows for runtime configuration changes.
 
 ## Best Practices
@@ -102,4 +119,5 @@ For advanced users, consider implementing dynamic configuration loading in `agen
 4. **Security**: Use environment variables for sensitive information.
 
 ## Conclusion
-Configuration files provide a flexible way to customize the Hello World Agent's behavior. By understanding and modifying these files, you can create a tailored agent experience that meets your specific needs.
+
+Configuration files provide a flexible way to customize the LLM Task Orchestrator's behavior. By understanding and modifying these files, you can create a tailored orchestration experience that meets your specific needs.
