@@ -264,7 +264,7 @@ deno run --allow-net --allow-env --allow-run --allow-write agent.ts \
 ### --agentName
 
 ```
-Default: HelloWorldAgent
+Default: LLMTaskOrchestrator
 ```
 
 Used for:
