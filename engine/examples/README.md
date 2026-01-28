@@ -1,23 +1,29 @@
 # Examples
 
-This directory contains examples demonstrating how to use the Hello World Agent with various command-line arguments and configurations.
+This directory contains examples demonstrating how to use the LLM Task Orchestrator with various command-line arguments and configurations.
 
 ## Basic Usage
 
 ### Example 1: Research Task
+
 Run a research task with a custom prompt:
+
 ```bash
 ./start.sh --prompt "What is quantum computing?" --task research
 ```
 
 ### Example 2: Execution Task
+
 Execute a task with a specific objective:
+
 ```bash
 ./start.sh --prompt "Run system diagnostic." --task execute
 ```
 
 ### Example 3: Combined Task
+
 Perform both research and execution tasks:
+
 ```bash
 ./start.sh --prompt "Analyze market trends and execute report generation." --task both
 ```
@@ -25,11 +31,13 @@ Perform both research and execution tasks:
 ## Human-in-the-Loop (HITL) Example
 
 ### Example 4: HITL Workflow
+
 Implement a human-in-the-loop process for decision-making:
-1. **Task Initiation**: The agent starts a task and reaches a decision point.
-2. **Human Input Request**: The agent prompts the user for input.
+
+1. **Task Initiation**: The orchestrator starts a task and reaches a decision point.
+2. **Human Input Request**: The orchestrator prompts the user for input.
 3. **User Feedback**: The user provides feedback or approval.
-4. **Task Continuation**: The agent uses the feedback to proceed with the task.
+4. **Task Continuation**: The orchestrator uses the feedback to proceed with the task.
 
 ```python
 # Example HITL implementation in main.py
@@ -37,7 +45,7 @@ Implement a human-in-the-loop process for decision-making:
 def run():
     args = parse_args()
     display_banner()
-    crew = HelloWorldCrew()
+    crew = LLMTaskOrchestrator()
     
     # Example HITL decision point
     if args.task == "research":
@@ -54,4 +62,5 @@ def run():
 ```
 
 ## Conclusion
-These examples provide a starting point for using the Hello World Agent with different configurations and incorporating human-in-the-loop processes. Customize the examples to fit your specific needs and explore the agent's capabilities.
+
+These examples provide a starting point for using the LLM Task Orchestrator with different configurations and incorporating human-in-the-loop processes. Customize the examples to fit your specific needs and explore the orchestrator's capabilities.
