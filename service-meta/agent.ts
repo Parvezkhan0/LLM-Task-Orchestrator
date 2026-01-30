@@ -1,6 +1,6 @@
 /**
  * Advanced Meta–Agent Generator Script for Deno (TypeScript)
- * Created by rUv
+ * Created by Parvez Khan
  * 
  * This script generates autonomous AI agents that follow the ReACT (Reasoning + Acting) methodology.
  * Each generated agent is a self-contained TypeScript file that can:
