@@ -1,7 +1,7 @@
-# Hello World Agent Guide
+# LLM Task Orchestrator Agent Guide
 
 ## Overview
-The Hello World Agent demonstrates the ReACT (Reasoning and Acting) methodology for autonomous task execution. This guide explains how to use and interact with the agent effectively.
+The LLM Task Orchestrator demonstrates the ReACT (Reasoning and Acting) methodology for autonomous task execution. This guide explains how to use and interact with the agent effectively.
 
 ## ReACT Methodology Implementation
 
@@ -45,6 +45,7 @@ Enable with `--hitl` flag for validation at key points:
 4. Results validation
 
 ## Authentication
+
 ```bash
 # Add to .env file
 OPENROUTER_API_KEY=your_api_key_here
@@ -126,5 +127,5 @@ curl -X POST /api/v1/analyze \
 
 ## Support and Resources
 - [Documentation](/docs/)
-- [GitHub Repository](https://github.com/ruvnet/hello_world_agent)
-- [Issue Tracker](https://github.com/ruvnet/hello_world_agent/issues)
+- [GitHub Repository](https://github.com/Parvezkhan0/LLM-Task-Orchestrator)
+- [Issue Tracker](https://github.com/Parvezkhan0/LLM-Task-Orchestrator/issues)
