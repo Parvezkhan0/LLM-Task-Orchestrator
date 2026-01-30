@@ -1,7 +1,6 @@
 {
     "status": "operational",
     "version": "0.1.0",
-    "last_updated": "2025-02-16T22:27:00Z",
     "components": {
         "core": {
             "status": "operational",
