@@ -1,15 +1,32 @@
 /**
- * Agentic ReAct Agent Template (Deno)
+ * LLM Task Orchestrator - Standalone Agentic ReAct Agent (Deno)
+ * Part of: https://github.com/Parvezkhan0/LLM-Task-Orchestrator
  * 
  * This agent follows the ReAct (Reasoning + Acting) logic pattern, integrates with the OpenRouter API for LLM interactions,
- * and supports tool usage within a structured agent framework. It now also includes an agentic reasoning engine
+ * and supports tool usage within a structured agent framework. It includes an agentic reasoning engine
  * that combines deductive and inductive reasoning for multi-domain decision making.
+ * 
+ * This is the standalone single-file agent implementation optimized for edge deployment.
+ * For the full Python-based orchestration engine with CrewAI, see the main repository.
  * 
  * ## Setup
  * - Ensure you have a Deno runtime available (e.g., in your serverless environment).
  * - Set the environment variable `OPENROUTER_API_KEY` with your OpenRouter API key.
  * - (Optional) Set `OPENROUTER_MODEL` to specify the model (default is "openai/o3-mini-high").
  * - This script requires network access to call the OpenRouter API. When running with Deno, use `--allow-net` (and `--allow-env` to read env variables).
+ * 
+ * ## Quick Start
+ * ```bash
+ * # Clone the repository
+ * git clone https://github.com/Parvezkhan0/LLM-Task-Orchestrator.git
+ * cd LLM-Task-Orchestrator/standalone_agent
+ * 
+ * # Set your API key
+ * export OPENROUTER_API_KEY=your_key_here
+ * 
+ * # Run the agent
+ * deno run --allow-net --allow-env agent.ts
+ * ```
  * 
  * ## Deployment (Fly.io)
  * 1. Create a Dockerfile using a Deno base image (e.g. `denoland/deno:alpine`).
@@ -19,21 +36,36 @@
  * 
  * ## Deployment (Supabase Edge Functions)
  * 1. Install the Supabase CLI and login to your project.
- * 2. Create a new Edge Function: `supabase functions new myagent`.
+ * 2. Create a new Edge Function: `supabase functions new llm-task-orchestrator`.
  * 3. Replace the content of the generated `index.ts` with this entire script.
  * 4. Ensure to add your OpenRouter API key: run `supabase secrets set OPENROUTER_API_KEY=your_key` for the function's environment.
- * 5. Deploy the function: `supabase functions deploy myagent --no-verify-jwt`.
+ * 5. Deploy the function: `supabase functions deploy llm-task-orchestrator --no-verify-jwt`.
  * 6. The function will be accessible at the URL provided by Supabase.
  * 
  * ## Usage
  * Send an HTTP POST request to the deployed endpoint with a JSON body: { "query": "your question", ... }.
  * The response will be a JSON object: { "answer": "the answer from the agent" }.
  * 
+ * Example:
+ * ```bash
+ * curl -X POST http://localhost:8000 \
+ *   -H "Content-Type: application/json" \
+ *   -d '{"query": "What is 25 * 4 + 10?"}'
+ * ```
+ * 
+ * ## Integration with Main Repository
+ * This standalone agent can be used independently or as part of the larger LLM Task Orchestrator ecosystem:
+ * - **Python Engine:** For multi-agent orchestration, see `/engine` directory
+ * - **Chat Integrations:** For Discord bots, see `/chat_integrations` directory
+ * - **Cloud Backend:** For Supabase edge functions setup, see `/cloud_backend` directory
+ * - **Documentation:** See `/planning_docs` for architecture details
+ * 
  * ## Customization
  * - **Deductive Reasoning:** Edit or add rules in the `applyDeductive` method of the Agent class.
  * - **Inductive Reasoning:** Extend the case databases (e.g., `medicalCases`, `legalCases`) or modify the matching logic in `applyInductive`.
  * - **Domain Support:** The agent currently supports "financial", "medical", and "legal". Add additional domains by updating both reasoning methods.
  * - **Prompt Engineering:** Modify `systemPrompt` to instruct the LLM regarding the use of tools and the desired ReAct format.
+ * - **Add Tools:** Extend the `tools` array with custom tool implementations (see main repo for examples: RAG, scraping, file I/O, etc.)
  */
 
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
@@ -77,6 +109,13 @@ const tools: Tool[] = [
     }
   },
   // Additional tools can be added here.
+  // See the main LLM Task Orchestrator repo for more tool implementations:
+  // - PDF/DOCX/CSV RAG Search
+  // - Website Scraping
+  // - File Reader/Writer
+  // - Selenium Automation
+  // - YouTube Search
+  // - JSON/Directory Search
 ];
 
 // --- System Prompt for ReAct ---
@@ -329,12 +368,21 @@ async function runAgent(query: string): Promise<string> {
 }
 
 // --- HTTP Server for Edge Deployment ---
-console.log(`Starting server on port ${PORT}...`);
+console.log(`LLM Task Orchestrator - Standalone Agent starting on port ${PORT}...`);
 serve(async (req: Request) => {
   if (req.method === "GET") {
     return new Response(JSON.stringify({
-      message: "Welcome to the Agentic ReAct Agent!",
-      usage: "Send a POST request with JSON body: { \"query\": \"your question\", ... }"
+      service: "LLM Task Orchestrator - Standalone ReAct Agent",
+      repository: "https://github.com/Parvezkhan0/LLM-Task-Orchestrator",
+      version: "1.0.0",
+      usage: "Send a POST request with JSON body: { \"query\": \"your question\", ... }",
+      features: [
+        "ReAct reasoning loop",
+        "Multi-domain agentic reasoning (financial, medical, legal)",
+        "Deductive and inductive inference",
+        "Tool-based execution",
+        "OpenRouter API integration"
+      ]
     }), { headers: { "Content-Type": "application/json" } });
   }
   if (req.method !== "POST") {
