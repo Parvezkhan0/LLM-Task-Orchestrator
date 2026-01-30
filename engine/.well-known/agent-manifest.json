@@ -1,8 +1,8 @@
 {
-    "name": "Hello World Agent",
+    "name": "LLM Task Orchestrator",
     "version": "0.1.0",
-    "description": "ReACT Methodology Demonstration System",
-    "last_updated": "2025-02-16",
+    "description": "Autonomous ReACT-based agent framework for task orchestration, tool execution, and multi-agent workflows",
+    "last_updated": "2026-01-26",
     
     "capabilities": {
         "research": {
@@ -21,7 +21,6 @@
             "model": "anthropic/claude-2"
         }
     },
-
     "control_modes": {
         "autonomous": {
             "description": "Self-directed ReACT methodology execution",
@@ -38,13 +37,11 @@
             ]
         }
     },
-
     "authentication": {
         "type": "api_key",
         "provider": "openrouter",
         "documentation": "https://openrouter.ai/docs"
     },
-
     "interfaces": {
         "rest_api": {
             "specification": "/.well-known/openapi.yaml",
@@ -55,7 +52,6 @@
             "protocol": "server-sent-events"
         }
     },
-
     "documentation": {
         "user_guide": "/docs/readme.md",
         "configuration": "/docs/configuration.md",
@@ -63,16 +59,14 @@
         "tools": "/docs/tools.md",
         "hitl": "/docs/human_in_the_loop.md"
     },
-
     "resource_limits": {
         "rate_limit": "100/hour",
         "max_tokens": 4096,
         "concurrent_tasks": 1
     },
-
     "repository": {
         "type": "git",
-        "url": "https://github.com/ruvnet/hello_world_agent",
-        "maintainer": "rUv"
+        "url": "https://github.com/Parvezkhan0/LLM-Task-Orchestrator",
+        "maintainer": "Parvezkhan0"
     }
 }
