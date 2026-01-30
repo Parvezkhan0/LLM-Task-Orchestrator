@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
-  title: Hello World Agent API
-  description: API for interacting with the Hello World Agent
+  title: LLM Task Orchestrator API
+  description: API for interacting with the LLM Task Orchestrator - Autonomous ReACT-based agent framework
   version: "1.0.0"
 servers:
   - url: https://api.example.com/v1
