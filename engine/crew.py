@@ -18,8 +18,8 @@ async def stream_openrouter_response(messages, model, progress_callback=None):
             headers={
                 "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
                 "Content-Type": "application/json",
-                "HTTP-Referer": "http://localhost:3000",
-                "X-Title": "Hello World Agent"
+                "HTTP-Referer": "https://github.com/Parvezkhan0/LLM-Task-Orchestrator",
+                "X-Title": "LLM Task Orchestrator"
             },
             json={
                 "model": model,
@@ -44,7 +44,7 @@ async def stream_openrouter_response(messages, model, progress_callback=None):
                     except (json.JSONDecodeError, UnicodeDecodeError):
                         continue
 
-class HelloWorldCrew:
+class TaskOrchestratorCrew:
     def __init__(self, enable_hitl=False):
         import os
         self.enable_hitl = enable_hitl
@@ -118,7 +118,7 @@ Analysis Configuration:
         
         print("""
 ╔══════════════════════════════════════════════════════════════════╗
-║  📊 INITIALIZING PERFORMANCE ANALYZER v1.0 - METRICS CORE       ║
+║  📊 LLM TASK ORCHESTRATOR - PERFORMANCE ANALYZER v1.0           ║
 ╚══════════════════════════════════════════════════════════════════╝
         
 ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
@@ -158,7 +158,7 @@ Format your response using this template:
         
         print("""
 ╔══════════════════════════════════════════════════════════════════╗
-║  🤖 INITIALIZING RESEARCH ANALYST v2.0 - DEEPSEEK CORE LOADED   ║
+║  🤖 LLM TASK ORCHESTRATOR - RESEARCH ANALYST v2.0               ║
 ╚══════════════════════════════════════════════════════════════════╝
         
 ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
@@ -198,7 +198,7 @@ Format your response using this template:
         
         print("""
 ╔══════════════════════════════════════════════════════════════════╗
-║  ⚡ ACTIVATING TASK EXECUTOR v1.5 - PHI CORE INITIALIZED        ║
+║  ⚡ LLM TASK ORCHESTRATOR - TASK EXECUTOR v1.5                  ║
 ║     WITH ReACT VALIDATION PROTOCOLS                             ║
 ╚══════════════════════════════════════════════════════════════════╝
 
