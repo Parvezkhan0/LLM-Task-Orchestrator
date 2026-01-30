@@ -1,13 +1,11 @@
 import warnings
 warnings.filterwarnings('ignore', category=UserWarning)
-
 import argparse
 import os
 import sys
-
 # Add the parent directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from agent.crew import HelloWorldCrew
+from agent.crew import TaskOrchestratorCrew
 
 # ANSI color codes
 MAGENTA = '\033[0;35m'
@@ -17,13 +15,13 @@ NC = '\033[0m'  # No Color
 def display_banner():
     print("""
 ╔══════════════════════════════════════════════════════════════════╗
-║              NEURAL NETWORK ORCHESTRATION SYSTEM                 ║
-║                     [ CODENAME: CREWAI ]                        ║
+║              LLM TASK ORCHESTRATOR SYSTEM v1.0                   ║
+║                  [ ReACT Agent Framework ]                       ║
 ╚══════════════════════════════════════════════════════════════════╝
     """)
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Neural Network Orchestration System')
+    parser = argparse.ArgumentParser(description='LLM Task Orchestrator - Autonomous ReACT Agent System')
     parser.add_argument('--prompt', type=str, help='Prompt for the AI system', default="Tell me about yourself")
     parser.add_argument('--task', type=str, choices=['research', 'execute', 'analyze', 'both'], 
                        help='Task to perform: research, execute, analyze, or both', default='both')
@@ -33,14 +31,15 @@ def parse_args():
 def run():
     args = parse_args()
     display_banner()
-    crew = HelloWorldCrew(enable_hitl=args.hitl)
+    
+    crew = TaskOrchestratorCrew(enable_hitl=args.hitl)
     result = crew.run(prompt=args.prompt, task_type=args.task)
+    
     if result:
         print("""
 ╔══════════════════════════════════════════════════════════════════╗
-║             🌟 NEURAL PROCESSING COMPLETE 🌟                     ║
+║             🌟 TASK ORCHESTRATION COMPLETE 🌟                    ║
 ╚══════════════════════════════════════════════════════════════════╝
-
 """ + MAGENTA + """▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
         ✨ ALL OBJECTIVES ACHIEVED
         📊 PERFORMANCE METRICS OPTIMAL
@@ -50,9 +49,8 @@ def run():
     else:
         print("""
 ╔══════════════════════════════════════════════════════════════════╗
-║             ⚠️ NEURAL PROCESSING INTERRUPTED ⚠️                 ║
+║             ⚠️ TASK ORCHESTRATION INTERRUPTED ⚠️                ║
 ╚══════════════════════════════════════════════════════════════════╝
-
 """ + RED + """▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
         🔍 DIAGNOSTIC SCAN INITIATED
         💫 QUANTUM STATE PRESERVED
