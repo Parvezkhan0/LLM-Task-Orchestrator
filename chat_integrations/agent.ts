@@ -41,7 +41,7 @@ import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
 // Environment variables
 const API_KEY = Deno.env.get("OPENROUTER_API_KEY");
-const MODEL = Deno.env.get("OPENROUTER_MODEL") || "openai/o3-mini-high";
+const MODEL = Deno.env.get("OPENROUTER_MODEL") || "openai/gpt-4o-mini";
 const PORT = parseInt(Deno.env.get("PORT") || "8000");
 const DISCORD_PUBLIC_KEY = Deno.env.get("DISCORD_PUBLIC_KEY");
 
@@ -184,6 +184,8 @@ const systemPrompt =
 `You are a smart assistant with access to the following tools:
 ${toolDescriptions}
 
+If a "Preliminary agentic reasoning result" is provided in the system messages, USE it directly as the basis of your answer. Do not ignore it.
+
 When answering the user, you may use the tools to gather information or calculate results.
 Follow this format strictly:
 Thought: <your reasoning here>
@@ -207,8 +209,9 @@ async function callOpenRouter(messages: ChatMessage[]): Promise<string> {
     body: JSON.stringify({
       model: MODEL,
       messages: messages,
-      stop: ["Observation:"],  // Stop generation before the model writes an observation
-      temperature: 0.0
+      stop: ["Observation:"],
+      temperature: 0.0,
+      max_tokens: 2048
     })
   });
   if (!response.ok) {

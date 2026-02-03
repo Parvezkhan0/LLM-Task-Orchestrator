@@ -40,7 +40,7 @@ import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
 // --- Environment Setup ---
 const API_KEY = Deno.env.get("OPENROUTER_API_KEY");
-const MODEL   = Deno.env.get("OPENROUTER_MODEL") || "openai/o3-mini-high";
+const MODEL = Deno.env.get("OPENROUTER_MODEL") || "openai/gpt-4o-mini";
 const PORT    = parseInt(Deno.env.get("PORT") || "8000");
 
 if (!API_KEY) {
@@ -321,7 +321,8 @@ async function callOpenRouter(messages: ChatMessage[]): Promise<string> {
       model: MODEL,
       messages,
       stop: ["Observation:"],
-      temperature: 0.0
+      temperature: 0.0,
+      max_tokens: 2048
     })
   });
   if (!response.ok) {

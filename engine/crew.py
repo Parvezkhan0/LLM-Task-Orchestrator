@@ -1,5 +1,5 @@
-from tools.custom_tool import CustomTool
-from tools.human_input import get_human_input, validate_human_input
+from engine.tools.custom_tool import CustomTool
+from engine.tools.human_input import get_human_input, validate_human_input
 import yaml
 from dotenv import load_dotenv
 import os
@@ -11,12 +11,17 @@ load_dotenv()  # Load environment variables from .env file
 
 async def stream_openrouter_response(messages, model, progress_callback=None):
     """Stream responses directly from OpenRouter with progress tracking"""
+    api_key = os.getenv('OPENROUTER_API_KEY')
+    if not api_key:
+        print("[ERROR] OPENROUTER_API_KEY is not set in your .env file")
+        return
+
     async with httpx.AsyncClient() as client:
         async with client.stream(
             "POST",
             "https://openrouter.ai/api/v1/chat/completions",
             headers={
-                "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
+                "Authorization": f"Bearer {api_key}",
                 "Content-Type": "application/json",
                 "HTTP-Referer": "https://github.com/Parvezkhan0/LLM-Task-Orchestrator",
                 "X-Title": "LLM Task Orchestrator"
@@ -25,24 +30,56 @@ async def stream_openrouter_response(messages, model, progress_callback=None):
                 "model": model,
                 "messages": messages,
                 "stream": True,
-                "temperature": 0.7
+                "temperature": 0.7,
+                "max_tokens": 2048
             },
             timeout=None
         ) as response:
+            if response.status_code != 200:
+                error_body = await response.aread()
+                print(f"[ERROR] OpenRouter returned status {response.status_code}: {error_body.decode()}")
+                return
+
+            # Buffer to accumulate partial chunks into complete SSE lines
+            buffer = ""
+
             async for chunk in response.aiter_bytes():
-                if chunk:
-                    try:
-                        chunk_str = chunk.decode()
-                        if chunk_str.startswith('data: '):
-                            chunk_data = json.loads(chunk_str[6:])
-                            if chunk_data != '[DONE]':
-                                if 'choices' in chunk_data and len(chunk_data['choices']) > 0:
-                                    delta = chunk_data['choices'][0].get('delta', {})
-                                    if 'content' in delta:
-                                        content = delta['content']
-                                        print(content, end='', flush=True)
-                    except (json.JSONDecodeError, UnicodeDecodeError):
+                if not chunk:
+                    continue
+
+                buffer += chunk.decode()
+
+                # SSE lines are separated by newlines; process all complete lines
+                while "\n" in buffer:
+                    line, buffer = buffer.split("\n", 1)
+                    line = line.strip()
+
+                    # Skip empty lines and comment lines
+                    if not line or line.startswith(":"):
                         continue
+
+                    # Only process data lines
+                    if not line.startswith("data: "):
+                        continue
+
+                    raw = line[len("data: "):]
+
+                    # End of stream sentinel
+                    if raw == "[DONE]":
+                        break
+
+                    try:
+                        chunk_data = json.loads(raw)
+                        if 'choices' in chunk_data and len(chunk_data['choices']) > 0:
+                            delta = chunk_data['choices'][0].get('delta', {})
+                            if 'content' in delta:
+                                print(delta['content'], end='', flush=True)
+                    except json.JSONDecodeError as e:
+                        print(f"\n[ERROR] Failed to parse SSE data: {e}\nRaw data: {raw}")
+
+            # Print a final newline after streaming completes
+            print()
+
 
 class TaskOrchestratorCrew:
     def __init__(self, enable_hitl=False):
@@ -87,6 +124,7 @@ class TaskOrchestratorCrew:
             
     async def _run_analyzer(self, prompt):
         """Run the analyzer agent"""
+        package_dir = os.path.dirname(os.path.abspath(__file__))
         with open(os.path.join(package_dir, 'config', 'analysis.yaml'), 'r') as f:
             analysis_config = yaml.safe_load(f)
             
