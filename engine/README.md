@@ -22,7 +22,7 @@ pip install llm_task_orchestrator
    Or install from source:
 
    ```bash
-   git clone https://github.com/ruvnet/llm_task_orchestrator.git
+   git clone https://github.com/Parvezkhan0/LLM-Task-Orchestrator.git
    cd llm_task_orchestrator
    pip install -e .
    ```
